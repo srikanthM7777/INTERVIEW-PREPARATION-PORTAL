@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block title %}Admin Dashboard{% endblock %}
+{% block content %}
+<h3><i class="fa-solid fa-user-shield text-primary"></i> Admin Dashboard</h3>
+
+<div class="row g-3 my-3">
+  <div class="col-md-2 col-6">
+    <div class="card stat-card p-3 text-center">
+      <h4 class="mb-0">{{ stats.users }}</h4><small class="text-muted">Students</small>
+    </div>
+  </div>
+  <div class="col-md-2 col-6">
+    <div class="card stat-card p-3 text-center">
+      <h4 class="mb-0">{{ stats.questions }}</h4><small class="text-muted">MCQ Questions</small>
+    </div>
+  </div>
+  <div class="col-md-2 col-6">
+    <div class="card stat-card p-3 text-center">
+      <h4 class="mb-0">{{ stats.coding_problems }}</h4><small class="text-muted">Coding Problems</small>
+    </div>
+  </div>
+  <div class="col-md-2 col-6">
+    <div class="card stat-card p-3 text-center">
+      <h4 class="mb-0">{{ stats.hr_questions }}</h4><small class="text-muted">HR Questions</small>
+    </div>
+  </div>
+  <div class="col-md-2 col-6">
+    <div class="card stat-card p-3 text-center">
+      <h4 class="mb-0">{{ stats.mock_tests }}</h4><small class="text-muted">Mock Tests Taken</small>
+    </div>
+  </div>
+  <div class="col-md-2 col-6">
+    <div class="card stat-card p-3 text-center">
+      <h4 class="mb-0">{{ stats.feedback }}</h4><small class="text-muted">Feedback</small>
+    </div>
+  </div>
+</div>
+
+<div class="row g-4">
+  <div class="col-md-4 col-6">
+    <a href="{{ url_for('admin_students') }}" class="text-decoration-none text-dark">
+      <div class="card module-card p-3"><div class="icon-circle"><i class="fa-solid fa-users"></i></div><h6>Manage Students</h6></div>
+    </a>
+  </div>
+  <div class="col-md-4 col-6">
+    <a href="{{ url_for('admin_questions') }}" class="text-decoration-none text-dark">
+      <div class="card module-card p-3"><div class="icon-circle"><i class="fa-solid fa-list-check"></i></div><h6>Manage Questions</h6></div>
+    </a>
+  </div>
+  <div class="col-md-4 col-6">
+    <a href="{{ url_for('admin_coding') }}" class="text-decoration-none text-dark">
+      <div class="card module-card p-3"><div class="icon-circle"><i class="fa-solid fa-code"></i></div><h6>Manage Coding Problems</h6></div>
+    </a>
+  </div>
+  <div class="col-md-4 col-6">
+    <a href="{{ url_for('admin_hr_questions') }}" class="text-decoration-none text-dark">
+      <div class="card module-card p-3"><div class="icon-circle"><i class="fa-solid fa-comments"></i></div><h6>Manage HR Questions</h6></div>
+    </a>
+  </div>
+  <div class="col-md-4 col-6">
+    <a href="{{ url_for('admin_reports') }}" class="text-decoration-none text-dark">
+      <div class="card module-card p-3"><div class="icon-circle"><i class="fa-solid fa-chart-simple"></i></div><h6>Reports</h6></div>
+    </a>
+  </div>
+  <div class="col-md-4 col-6">
+    <a href="{{ url_for('admin_feedback') }}" class="text-decoration-none text-dark">
+      <div class="card module-card p-3"><div class="icon-circle"><i class="fa-solid fa-message"></i></div><h6>Feedback</h6></div>
+    </a>
+  </div>
+</div>
+{% endblock %}

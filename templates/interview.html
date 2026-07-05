@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}HR Interview Questions{% endblock %}
+{% block content %}
+<h3><i class="fa-solid fa-comments text-primary"></i> HR Interview Questions</h3>
+
+<form method="GET" class="row g-2 mb-4">
+  <div class="col-md-4">
+    <select name="category" class="form-select" onchange="this.form.submit()">
+      <option value="">All Categories</option>
+      {% for cat in categories %}
+      <option value="{{ cat }}" {% if selected_category == cat %}selected{% endif %}>{{ cat }}</option>
+      {% endfor %}
+    </select>
+  </div>
+</form>
+
+<div class="accordion" id="hrAccordion">
+  {% for q in questions %}
+  <div class="accordion-item mb-2">
+    <h2 class="accordion-header">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#q{{ q.id }}">
+        {{ q.question }}
+      </button>
+    </h2>
+    <div id="q{{ q.id }}" class="accordion-collapse collapse" data-bs-parent="#hrAccordion">
+      <div class="accordion-body">
+        <p><strong>Model Answer:</strong> {{ q.model_answer }}</p>
+        {% if q.tips %}<p><strong>Tips:</strong> {{ q.tips }}</p>{% endif %}
+        {% if q.common_mistakes %}<p class="text-danger"><strong>Common Mistakes:</strong> {{ q.common_mistakes }}</p>{% endif %}
+      </div>
+    </div>
+  </div>
+  {% else %}
+  <p class="text-muted">No HR questions found.</p>
+  {% endfor %}
+</div>
+{% endblock %}

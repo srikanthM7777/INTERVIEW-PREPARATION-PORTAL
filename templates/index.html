@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% block title %}Home - Interview Preparation Portal{% endblock %}
+{% block content %}
+
+<div class="hero-section text-center mb-5">
+  <h1 class="display-5">Ace Your Next Interview</h1>
+  <p class="lead">Aptitude, coding, HR and technical practice — all in one portal.</p>
+  {% if not current_user %}
+  <a href="{{ url_for('register') }}" class="btn btn-warning btn-lg me-2">Get Started Free</a>
+  <a href="{{ url_for('login') }}" class="btn btn-outline-light btn-lg">Login</a>
+  {% else %}
+  <a href="{{ url_for('dashboard') }}" class="btn btn-warning btn-lg">Go to Dashboard</a>
+  {% endif %}
+</div>
+
+<h3 class="text-center mb-4">Everything You Need to Prepare</h3>
+<div class="row g-4 mb-5">
+  <div class="col-md-3 col-6">
+    <div class="card feature-card p-3 text-center">
+      <i class="fa-solid fa-calculator fs-2 text-primary mb-2"></i>
+      <h6>Aptitude Practice</h6>
+      <p class="small text-muted mb-0">Quantitative, logical, verbal &amp; more</p>
+    </div>
+  </div>
+  <div class="col-md-3 col-6">
+    <div class="card feature-card p-3 text-center">
+      <i class="fa-solid fa-code fs-2 text-primary mb-2"></i>
+      <h6>Coding Challenges</h6>
+      <p class="small text-muted mb-0">Python, Java, C, C++, JavaScript</p>
+    </div>
+  </div>
+  <div class="col-md-3 col-6">
+    <div class="card feature-card p-3 text-center">
+      <i class="fa-solid fa-comments fs-2 text-primary mb-2"></i>
+      <h6>HR Interview Prep</h6>
+      <p class="small text-muted mb-0">Model answers &amp; expert tips</p>
+    </div>
+  </div>
+  <div class="col-md-3 col-6">
+    <div class="card feature-card p-3 text-center">
+      <i class="fa-solid fa-chart-line fs-2 text-primary mb-2"></i>
+      <h6>Mock Tests</h6>
+      <p class="small text-muted mb-0">Timed tests with instant scoring</p>
+    </div>
+  </div>
+</div>
+
+<div class="row align-items-center bg-white rounded-4 p-4 shadow-sm mb-5">
+  <div class="col-md-8">
+    <h4>Top Companies We Prepare You For</h4>
+    <p class="text-muted mb-0">TCS &bull; Infosys &bull; Wipro &bull; Accenture &bull; Cognizant &bull; Capgemini &bull; and more</p>
+  </div>
+  <div class="col-md-4 text-md-end text-center mt-3 mt-md-0">
+    <i class="fa-solid fa-building fs-1 text-secondary"></i>
+  </div>
+</div>
+
+<div class="row g-4">
+  <div class="col-md-4">
+    <div class="card feature-card p-4">
+      <i class="fa-solid fa-quote-left text-warning mb-2"></i>
+      <p class="mb-1">This portal helped me clear my aptitude round in one shot. The mock tests feel just like the real thing.</p>
+      <small class="text-muted">— Final Year, CSE Student</small>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card feature-card p-4">
+      <i class="fa-solid fa-quote-left text-warning mb-2"></i>
+      <p class="mb-1">The HR question bank with model answers is a lifesaver before interviews.</p>
+      <small class="text-muted">— ECE Graduate</small>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card feature-card p-4">
+      <i class="fa-solid fa-quote-left text-warning mb-2"></i>
+      <p class="mb-1">Leaderboard kept me motivated to practice coding every single day.</p>
+      <small class="text-muted">— IT Student</small>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

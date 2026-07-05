@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Reports{% endblock %}
+{% block content %}
+<a href="{{ url_for('admin_dashboard') }}" class="small">&larr; Back to Admin Dashboard</a>
+<h3 class="mt-2">Mock Test Reports</h3>
+<div class="table-responsive">
+<table class="table table-hover bg-white">
+  <thead><tr><th>#</th><th>Student</th><th>Score</th><th>Total</th><th>Time Taken</th><th>Date</th></tr></thead>
+  <tbody>
+  {% for t in tests %}
+    <tr>
+      <td>{{ loop.index }}</td>
+      <td>{{ t.user.name }}</td>
+      <td>{{ t.score }}</td>
+      <td>{{ t.total }}</td>
+      <td>{{ (t.time_taken // 60) if t.time_taken else "-" }}m {{ (t.time_taken % 60) if t.time_taken else "" }}s</td>
+      <td>{{ t.date.strftime('%d %b %Y, %I:%M %p') }}</td>
+    </tr>
+  {% else %}
+    <tr><td colspan="6" class="text-center text-muted">No mock test attempts recorded yet.</td></tr>
+  {% endfor %}
+  </tbody>
+</table>
+</div>
+{% endblock %}

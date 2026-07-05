@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Aptitude Practice{% endblock %}
+{% block content %}
+<h3><i class="fa-solid fa-calculator text-primary"></i> Aptitude Practice</h3>
+<p class="text-muted">Choose a category to start practicing.</p>
+<div class="row g-4">
+  {% for cat in categories %}
+  <div class="col-md-4 col-6">
+    <a href="{{ url_for('aptitude_quiz', category=cat) }}" class="text-decoration-none text-dark">
+      <div class="card module-card p-3">
+        <div class="icon-circle"><i class="fa-solid fa-square-root-variable"></i></div>
+        <h6>{{ cat }}</h6>
+        <p class="small text-muted mb-0">Timed practice questions</p>
+      </div>
+    </a>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}

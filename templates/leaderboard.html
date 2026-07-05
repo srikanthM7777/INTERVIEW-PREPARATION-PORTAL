@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Leaderboard{% endblock %}
+{% block content %}
+<h3><i class="fa-solid fa-trophy text-warning"></i> Leaderboard</h3>
+<div class="table-responsive">
+<table class="table table-hover bg-white align-middle">
+  <thead><tr><th>Rank</th><th>Student</th><th>College</th><th>Best Score</th><th>Tests Completed</th></tr></thead>
+  <tbody>
+  {% for user, best_score, tests_completed in results %}
+    <tr>
+      <td class="leaderboard-rank-{{ loop.index }}">#{{ loop.index }}</td>
+      <td>{{ user.name }}</td>
+      <td>{{ user.college or "-" }}</td>
+      <td>{{ best_score }}</td>
+      <td>{{ tests_completed }}</td>
+    </tr>
+  {% else %}
+    <tr><td colspan="5" class="text-center text-muted">No mock test attempts yet. Be the first!</td></tr>
+  {% endfor %}
+  </tbody>
+</table>
+</div>
+{% endblock %}

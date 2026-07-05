@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block title %}Manage Questions{% endblock %}
+{% block content %}
+<a href="{{ url_for('admin_dashboard') }}" class="small">&larr; Back to Admin Dashboard</a>
+<h3 class="mt-2">Manage Aptitude &amp; Technical Questions</h3>
+
+<div class="card p-4 mb-4">
+  <h6>Add New Question</h6>
+  <form method="POST" class="row g-2">
+    <div class="col-md-3">
+      <select name="section" class="form-select" required>
+        <option value="aptitude">Aptitude</option>
+        <option value="technical">Technical</option>
+      </select>
+    </div>
+    <div class="col-md-3">
+      <input type="text" name="category" class="form-control" placeholder="Category e.g. Quantitative / DBMS" required>
+    </div>
+    <div class="col-md-3">
+      <select name="difficulty" class="form-select">
+        <option>Easy</option><option>Medium</option><option>Hard</option>
+      </select>
+    </div>
+    <div class="col-12">
+      <textarea name="question" class="form-control" placeholder="Question text" required></textarea>
+    </div>
+    <div class="col-md-3"><input type="text" name="option1" class="form-control" placeholder="Option 1" required></div>
+    <div class="col-md-3"><input type="text" name="option2" class="form-control" placeholder="Option 2" required></div>
+    <div class="col-md-3"><input type="text" name="option3" class="form-control" placeholder="Option 3" required></div>
+    <div class="col-md-3"><input type="text" name="option4" class="form-control" placeholder="Option 4" required></div>
+    <div class="col-md-6">
+      <input type="text" name="answer" class="form-control" placeholder="Correct answer (must match an option exactly)" required>
+    </div>
+    <div class="col-md-6">
+      <button type="submit" class="btn btn-primary w-100">Add Question</button>
+    </div>
+  </form>
+</div>
+
+<div class="table-responsive">
+<table class="table table-hover bg-white">
+  <thead><tr><th>#</th><th>Section</th><th>Category</th><th>Question</th><th>Answer</th><th>Difficulty</th><th></th></tr></thead>
+  <tbody>
+  {% for q in questions %}
+    <tr>
+      <td>{{ loop.index }}</td>
+      <td>{{ q.section }}</td>
+      <td>{{ q.category }}</td>
+      <td>{{ q.question[:60] }}{% if q.question|length > 60 %}...{% endif %}</td>
+      <td>{{ q.answer }}</td>
+      <td><span class="badge badge-difficulty-{{ q.difficulty }}">{{ q.difficulty }}</span></td>
+      <td><a href="{{ url_for('admin_delete_question', qid=q.id) }}" class="btn btn-sm btn-outline-danger" onclick="return confirm('Delete this question?')">Delete</a></td>
+    </tr>
+  {% else %}
+    <tr><td colspan="7" class="text-center text-muted">No questions added yet.</td></tr>
+  {% endfor %}
+  </tbody>
+</table>
+</div>
+{% endblock %}

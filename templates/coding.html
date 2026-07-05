@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}Coding Practice{% endblock %}
+{% block content %}
+<h3><i class="fa-solid fa-code text-primary"></i> Coding Practice</h3>
+
+<form method="GET" class="row g-2 mb-4">
+  <div class="col-md-3">
+    <select name="language" class="form-select" onchange="this.form.submit()">
+      <option value="">All Languages</option>
+      {% for lang in languages %}
+      <option value="{{ lang }}" {% if selected_language == lang %}selected{% endif %}>{{ lang }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="col-md-3">
+    <select name="difficulty" class="form-select" onchange="this.form.submit()">
+      <option value="">All Difficulties</option>
+      <option value="Easy" {% if selected_difficulty == "Easy" %}selected{% endif %}>Easy</option>
+      <option value="Medium" {% if selected_difficulty == "Medium" %}selected{% endif %}>Medium</option>
+      <option value="Hard" {% if selected_difficulty == "Hard" %}selected{% endif %}>Hard</option>
+    </select>
+  </div>
+</form>
+
+<div class="table-responsive">
+<table class="table table-hover bg-white">
+  <thead><tr><th>#</th><th>Title</th><th>Language</th><th>Difficulty</th><th></th></tr></thead>
+  <tbody>
+  {% for p in problems %}
+    <tr>
+      <td>{{ loop.index }}</td>
+      <td>{{ p.title }}</td>
+      <td>{{ p.language }}</td>
+      <td><span class="badge badge-difficulty-{{ p.difficulty }}">{{ p.difficulty }}</span></td>
+      <td><a href="{{ url_for('coding_detail', problem_id=p.id) }}" class="btn btn-sm btn-outline-primary">Solve</a></td>
+    </tr>
+  {% else %}
+    <tr><td colspan="5" class="text-center text-muted">No problems match your filters.</td></tr>
+  {% endfor %}
+  </tbody>
+</table>
+</div>
+{% endblock %}

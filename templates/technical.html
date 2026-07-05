@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Technical Interview Prep{% endblock %}
+{% block content %}
+<h3><i class="fa-solid fa-laptop-code text-primary"></i> Technical Interview Prep</h3>
+<p class="text-muted">Choose a subject to practice MCQs and theory questions.</p>
+<div class="row g-4">
+  {% for subj in subjects %}
+  <div class="col-md-4 col-6">
+    <a href="{{ url_for('technical_quiz', subject=subj) }}" class="text-decoration-none text-dark">
+      <div class="card module-card p-3">
+        <div class="icon-circle"><i class="fa-solid fa-book"></i></div>
+        <h6>{{ subj }}</h6>
+        <p class="small text-muted mb-0">MCQs &amp; theory</p>
+      </div>
+    </a>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% block title %}Profile{% endblock %}
+{% block content %}
+<div class="row g-4">
+  <div class="col-md-4">
+    <div class="card p-4 text-center">
+      <img id="photoPreview" src="{{ url_for('uploaded_file', filename=user.profile_photo) if user.profile_photo != 'default.png' else 'https://ui-avatars.com/api/?name=' + user.name|urlencode + '&background=4f46e5&color=fff' }}"
+           class="profile-photo mx-auto mb-3" alt="Profile Photo">
+      <h5>{{ user.name }}</h5>
+      <p class="text-muted mb-1">{{ user.email }}</p>
+      <p class="text-muted small">{{ user.college or "College not set" }} &bull; {{ user.branch or "-" }} &bull; {{ user.year or "-" }}</p>
+      {% if user.resume_file %}
+      <a href="{{ url_for('uploaded_file', filename=user.resume_file) }}" class="btn btn-outline-primary btn-sm" target="_blank">
+        <i class="fa-solid fa-file-pdf"></i> View Resume
+      </a>
+      {% endif %}
+      <a href="{{ url_for('change_password') }}" class="btn btn-link btn-sm mt-2">Change Password</a>
+    </div>
+
+    <div class="card p-3 mt-3">
+      <h6>Mock Test History</h6>
+      {% for t in tests %}
+        <div class="d-flex justify-content-between border-bottom py-1">
+          <span class="small">{{ t.date.strftime('%d %b %Y') }}</span>
+          <span class="fw-bold">{{ t.score }}/{{ t.total }}</span>
+        </div>
+      {% else %}
+        <p class="text-muted small mb-0">No mock tests taken yet.</p>
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="col-md-8">
+    <div class="card p-4">
+      <h5 class="mb-3">Edit Profile</h5>
+      <form method="POST" enctype="multipart/form-data">
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Full Name</label>
+            <input type="text" name="name" class="form-control" value="{{ user.name }}">
+          </div>
+          <div class="col-md-6 mb-3">
+            <label class="form-label">College</label>
+            <input type="text" name="college" class="form-control" value="{{ user.college or '' }}">
+          </div>
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Branch</label>
+            <input type="text" name="branch" class="form-control" value="{{ user.branch or '' }}">
+          </div>
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Year</label>
+            <select name="year" class="form-select">
+              {% for y in ["1st Year", "2nd Year", "3rd Year", "4th Year"] %}
+              <option {% if user.year == y %}selected{% endif %}>{{ y }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="col-12 mb-3">
+            <label class="form-label">Skills (comma separated)</label>
+            <input type="text" name="skills" class="form-control" value="{{ user.skills or '' }}" placeholder="Python, SQL, React...">
+          </div>
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Profile Photo</label>
+            <input type="file" name="profile_photo" class="form-control" accept="image/*" onchange="previewPhoto(this, 'photoPreview')">
+          </div>
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Resume (PDF)</label>
+            <input type="file" name="resume_file" class="form-control" accept=".pdf,.doc,.docx">
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+      </form>
+    </div>
+
+    <div class="card p-4 mt-4">
+      <h6>Send Feedback</h6>
+      <form method="POST" action="{{ url_for('feedback') }}">
+        <textarea name="message" class="form-control mb-2" rows="3" placeholder="Tell us what you think..." required></textarea>
+        <button type="submit" class="btn btn-outline-primary btn-sm">Submit Feedback</button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

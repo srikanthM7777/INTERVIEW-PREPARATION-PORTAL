@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<h3>Welcome, {{ user.name }} <span class="fs-6 text-muted">({{ user.college or "Add your college in profile" }})</span></h3>
+<p class="text-muted">Here's your preparation progress at a glance.</p>
+
+<div class="row g-3 my-3">
+  <div class="col-md-3 col-6">
+    <div class="card stat-card p-3 text-center">
+      <i class="fa-solid fa-calculator text-primary fs-3 mb-1"></i>
+      <h5 class="mb-0">{{ total_questions }}</h5>
+      <small class="text-muted">Practice Questions</small>
+    </div>
+  </div>
+  <div class="col-md-3 col-6">
+    <div class="card stat-card p-3 text-center">
+      <i class="fa-solid fa-code text-success fs-3 mb-1"></i>
+      <h5 class="mb-0">{{ total_coding }}</h5>
+      <small class="text-muted">Coding Problems</small>
+    </div>
+  </div>
+  <div class="col-md-3 col-6">
+    <div class="card stat-card p-3 text-center">
+      <i class="fa-solid fa-clipboard-check text-warning fs-3 mb-1"></i>
+      <h5 class="mb-0">{{ tests|length }}</h5>
+      <small class="text-muted">Mock Tests Taken</small>
+    </div>
+  </div>
+  <div class="col-md-3 col-6">
+    <div class="card stat-card p-3 text-center">
+      <i class="fa-solid fa-trophy text-danger fs-3 mb-1"></i>
+      <h5 class="mb-0">{{ tests[0].score if tests else "-" }}</h5>
+      <small class="text-muted">Latest Score</small>
+    </div>
+  </div>
+</div>
+
+<h5 class="mt-4 mb-3">Choose a Module</h5>
+<div class="row g-4">
+  <div class="col-md-3 col-6">
+    <a href="{{ url_for('aptitude') }}" class="text-decoration-none text-dark">
+      <div class="card module-card p-3">
+        <div class="icon-circle"><i class="fa-solid fa-calculator"></i></div>
+        <h6>Aptitude</h6>
+        <p class="small text-muted mb-0">Quant, logical, verbal &amp; DI</p>
+      </div>
+    </a>
+  </div>
+  <div class="col-md-3 col-6">
+    <a href="{{ url_for('coding') }}" class="text-decoration-none text-dark">
+      <div class="card module-card p-3">
+        <div class="icon-circle"><i class="fa-solid fa-code"></i></div>
+        <h6>Coding Practice</h6>
+        <p class="small text-muted mb-0">Easy to hard problems</p>
+      </div>
+    </a>
+  </div>
+  <div class="col-md-3 col-6">
+    <a href="{{ url_for('hr') }}" class="text-decoration-none text-dark">
+      <div class="card module-card p-3">
+        <div class="icon-circle"><i class="fa-solid fa-comments"></i></div>
+        <h6>HR Interview</h6>
+        <p class="small text-muted mb-0">Model answers &amp; tips</p>
+      </div>
+    </a>
+  </div>
+  <div class="col-md-3 col-6">
+    <a href="{{ url_for('technical') }}" class="text-decoration-none text-dark">
+      <div class="card module-card p-3">
+        <div class="icon-circle"><i class="fa-solid fa-laptop-code"></i></div>
+        <h6>Technical Interview</h6>
+        <p class="small text-muted mb-0">DBMS, OS, Networks &amp; more</p>
+      </div>
+    </a>
+  </div>
+  <div class="col-md-3 col-6">
+    <a href="{{ url_for('mock_test_intro') }}" class="text-decoration-none text-dark">
+      <div class="card module-card p-3">
+        <div class="icon-circle"><i class="fa-solid fa-stopwatch"></i></div>
+        <h6>Mock Test</h6>
+        <p class="small text-muted mb-0">30 questions, 30 minutes</p>
+      </div>
+    </a>
+  </div>
+  <div class="col-md-3 col-6">
+    <a href="{{ url_for('leaderboard') }}" class="text-decoration-none text-dark">
+      <div class="card module-card p-3">
+        <div class="icon-circle"><i class="fa-solid fa-trophy"></i></div>
+        <h6>Leaderboard</h6>
+        <p class="small text-muted mb-0">See where you rank</p>
+      </div>
+    </a>
+  </div>
+  <div class="col-md-3 col-6">
+    <a href="{{ url_for('profile') }}" class="text-decoration-none text-dark">
+      <div class="card module-card p-3">
+        <div class="icon-circle"><i class="fa-solid fa-id-card"></i></div>
+        <h6>Profile</h6>
+        <p class="small text-muted mb-0">Resume &amp; achievements</p>
+      </div>
+    </a>
+  </div>
+</div>
+
+{% if tests %}
+<h5 class="mt-4 mb-3">Recent Mock Test Scores</h5>
+<div class="table-responsive">
+<table class="table table-bordered bg-white">
+  <thead><tr><th>Date</th><th>Score</th><th>Total</th><th>Time Taken</th></tr></thead>
+  <tbody>
+  {% for t in tests %}
+    <tr>
+      <td>{{ t.date.strftime('%d %b %Y, %I:%M %p') }}</td>
+      <td>{{ t.score }}</td>
+      <td>{{ t.total }}</td>
+      <td>{{ (t.time_taken // 60) }}m {{ (t.time_taken % 60) }}s</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+</div>
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}Manage HR Questions{% endblock %}
+{% block content %}
+<a href="{{ url_for('admin_dashboard') }}" class="small">&larr; Back to Admin Dashboard</a>
+<h3 class="mt-2">Manage HR Interview Questions</h3>
+
+<div class="card p-4 mb-4">
+  <h6>Add New HR Question</h6>
+  <form method="POST" class="row g-2">
+    <div class="col-md-4"><input type="text" name="category" class="form-control" placeholder="Category e.g. Leadership" required></div>
+    <div class="col-12"><textarea name="question" class="form-control" placeholder="Question" required></textarea></div>
+    <div class="col-12"><textarea name="model_answer" class="form-control" placeholder="Model Answer"></textarea></div>
+    <div class="col-md-6"><textarea name="tips" class="form-control" placeholder="Tips"></textarea></div>
+    <div class="col-md-6"><textarea name="common_mistakes" class="form-control" placeholder="Common Mistakes"></textarea></div>
+    <div class="col-12"><button type="submit" class="btn btn-primary">Add HR Question</button></div>
+  </form>
+</div>
+
+<div class="table-responsive">
+<table class="table table-hover bg-white">
+  <thead><tr><th>#</th><th>Category</th><th>Question</th><th></th></tr></thead>
+  <tbody>
+  {% for q in questions %}
+    <tr>
+      <td>{{ loop.index }}</td>
+      <td>{{ q.category }}</td>
+      <td>{{ q.question }}</td>
+      <td><a href="{{ url_for('admin_delete_hr_question', qid=q.id) }}" class="btn btn-sm btn-outline-danger" onclick="return confirm('Delete this question?')">Delete</a></td>
+    </tr>
+  {% else %}
+    <tr><td colspan="4" class="text-center text-muted">No HR questions added yet.</td></tr>
+  {% endfor %}
+  </tbody>
+</table>
+</div>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Mock Test{% endblock %}
+{% block content %}
+<div class="card auth-card p-4 text-center">
+  <i class="fa-solid fa-stopwatch text-primary fs-1 mb-3"></i>
+  <h3>Full Mock Test</h3>
+  <ul class="list-unstyled text-start mx-auto" style="max-width: 320px;">
+    <li><i class="fa-solid fa-check text-success me-2"></i>30 random questions</li>
+    <li><i class="fa-solid fa-check text-success me-2"></i>30 minutes time limit</li>
+    <li><i class="fa-solid fa-check text-success me-2"></i>Auto-submits when time is up</li>
+    <li><i class="fa-solid fa-check text-success me-2"></i>Instant score &amp; leaderboard entry</li>
+  </ul>
+  <a href="{{ url_for('mock_test_start') }}" class="btn btn-primary btn-lg mt-2">Start Mock Test</a>
+</div>
+{% endblock %}

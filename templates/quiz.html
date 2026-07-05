@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block title %}{{ category }} Quiz{% endblock %}
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <div>
+    <h4 class="mb-0">{{ category }}</h4>
+    <a href="{{ back_url }}" class="small">&larr; Back</a>
+  </div>
+  {% if time_limit %}
+  <div class="card px-3 py-2 text-center">
+    <small class="text-muted">Time Left</small>
+    <div id="timer" class="timer-box fs-4 text-danger">30:00</div>
+  </div>
+  {% endif %}
+</div>
+
+{% if not questions %}
+<div class="alert alert-info">No questions available in this category yet. Please check back later or ask an admin to add some.</div>
+{% else %}
+
+<form method="POST" id="quizForm" action="{{ url_for('submit_mock_test') if quiz_type == 'mock' else url_for('submit_quiz') }}">
+  <input type="hidden" name="total_questions" value="{{ questions|length }}">
+  {% if start_time %}<input type="hidden" name="start_time" value="{{ start_time }}">{% endif %}
+
+  {% for q in questions %}
+  {% set q_index = loop.index0 %}
+  <div class="card mb-3 p-3">
+    <input type="hidden" name="qid_{{ q_index }}" value="{{ q.id }}">
+    <div class="d-flex justify-content-between">
+      <h6>Q{{ loop.index }}. {{ q.question }}</h6>
+      <span class="badge badge-difficulty-{{ q.difficulty }}">{{ q.difficulty }}</span>
+    </div>
+    <div class="options-group row g-2 mt-1">
+      {% for opt in [q.option1, q.option2, q.option3, q.option4] %}
+      <div class="col-md-6">
+        <label class="border rounded p-2 d-block quiz-option">
+          <input type="radio" name="answer_{{ q_index }}" value="{{ opt }}" class="form-check-input me-2" style="display:none">
+          {{ opt }}
+        </label>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  {% endfor %}
+
+  <button type="submit" class="btn btn-primary btn-lg w-100 mb-4">Submit</button>
+</form>
+
+{% endif %}
+
+{% endblock %}
+
+{% block scripts %}
+{% if time_limit %}
+<script>
+  startCountdown({{ time_limit }}, "timer", "quizForm");
+</script>
+{% endif %}
+{% endblock %}
